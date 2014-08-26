@@ -1,0 +1,49 @@
+@import "../../../../assets/stylesheets/mixins.less";
+
+.brainstorm {
+    textarea {
+        resize: none;
+        transition: none;
+        width: 50%;
+        height: 24px;
+    }
+    article {
+        border: 1px solid @content-color-20;
+        width: 80%;
+        margin: 10px;
+        &.vote_brainstorm {
+            display: table;
+            h1:empty {
+                display: none;
+            }
+            nav {
+                background-color: @content-color-20;
+                display: table-cell;
+                width: 4%;
+                padding: 4px;
+                text-align: center;
+                vertical-align: middle;
+                input {
+                    display: block;
+                }
+            }
+            div.body {
+                padding: 10px;
+                display: table-cell;
+                vertical-align: middle;
+                width: 92%;
+            }
+            div.power {
+                display: table-cell;
+                width: 4%;
+                padding: 4px;
+                text-align: center;
+                vertical-align: middle;
+                border-right: 1px solid @content-color-20;
+            }
+        }
+        &.linked_brainstorm {
+            padding: 10px;
+        }
+    }
+}

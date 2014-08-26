@@ -1,0 +1,7 @@
+pluginname=Brainstorm
+pluginclassname=BrainstormPlugin
+origin=intelec
+version=1.0
+studipMinVersion=3.0
+dbscheme=install.sql
+uninstalldbscheme=uninstall.sql
