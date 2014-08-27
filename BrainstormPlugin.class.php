@@ -14,8 +14,7 @@ class BrainstormPlugin extends StudIPPlugin implements StandardPlugin {
 
     public function initialize() {
 
-
-        PageLayout::addStylesheet($this->getPluginURL() . '/assets/style.css');
+        self::addStylesheet('/assets/style.less');
         PageLayout::addScript($this->getPluginURL() . '/assets/autoresize.jquery.min.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/application.js');
     }
