@@ -55,7 +55,7 @@ class ShowController extends StudipController {
     private function init() {
         $this->brainstorms = SimpleORMapCollection::createFromArray(Brainstorm::findByRange_id(Course::findCurrent()->id));
         foreach ($this->brainstorms as $brainstorm) {
-            Navigation::addItem('/course/brainstorm/' . $brainstorm->id, new AutoNavigation(htmlReady($brainstorm->title), PluginEngine::GetURL($this->plugin, array(), 'show/brainstorm/' . $brainstorm->id)));
+            Navigation::addItem('/course/brainstorm/' . $brainstorm->id, new AutoNavigation($brainstorm->title, PluginEngine::GetURL($this->plugin, array(), 'show/brainstorm/' . $brainstorm->id)));
         }
 
         // Create sidebar
