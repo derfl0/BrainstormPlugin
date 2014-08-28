@@ -1,4 +1,4 @@
-<form class="studip_form">
+<form class="studip_form" method="post" action="<?= PluginEngine::getLink($plugin, array(), 'show/create') ?>">
 
     <?= CSRFProtection::tokenTag() ?>
     

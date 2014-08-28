@@ -12,7 +12,10 @@ class ShowController extends StudipController {
     public function before_filter(&$action, &$args) {
 
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base_without_infobox'));
-//      PageLayout::setTitle('');
+        if (class_exists("Sidebar")) {
+            Sidebar::get()->setImage($this->plugin->getPluginURL()."/assets/images/sidebar.png");
+        }
+        PageLayout::setTitle($GLOBALS['SessSemName']["header_line"]." - ".$this->plugin->getDisplayTitle());
     }
 
     public function index_action() {
@@ -20,9 +23,11 @@ class ShowController extends StudipController {
     }
 
     public function create_action() {
-        if (Request::submitted('create')) {
+        Navigation::activateItem("/course/brainstorm");
+
+        if (Request::isPost() && Request::submitted('create')) {
             CSRFProtection::verifySecurityToken();
-            $GLOBALS['perm']->check('dozent', Course::findCurrent()->id);
+            $GLOBALS['perm']->check('tutor', Course::findCurrent()->id);
             $data = Request::getArray('brainstorm');
             $data['range_id'] = Course::findCurrent()->id;
             Brainstorm::create($data);
@@ -34,13 +39,13 @@ class ShowController extends StudipController {
         $this->brainstorm = $this->brainstorms->find($id);
 
         // Insert new subbrainstorm
-        if (Request::submitted('create')) {
+        if (Request::isPost() && Request::submitted('create')) {
             CSRFProtection::verifySecurityToken();
             $this->brainstorm->answer(Request::get('answer'));
         }
 
         // Check if vote is required
-        if (Request::submitted('vote')) {
+        if (Request::isPost() && Request::submitted('vote')) {
             CSRFProtection::verifySecurityToken();
             $brainstorm = new Brainstorm(Request::get('brainstorm'));
             $brainstorm->vote(key(Request::getArray('vote')));
