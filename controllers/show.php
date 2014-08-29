@@ -28,18 +28,19 @@ class ShowController extends StudipController {
         
     }
 
-    public function create_action($range_id = null) {
+    public function create_action() {
         if (Request::submitted('create')) {
             CSRFProtection::verifySecurityToken();
             $data = Request::getArray('brainstorm');
             $data['user_id'] = User::findCurrent()->id;
             $data['seminar_id'] = Course::findCurrent()->id;
+            $data['range_id'] = $this->brainstorm->id;
 
             // Check if we are allowed to post that brainstorm
-            if ($GLOBALS['perm']->check('dozent', Course::findCurrent()->id) || $this->brainstorm->type == "sub") {
-                Brainstorm::create($data);
-                $this->redirect('show/index');
-            }
+            //if ($GLOBALS['perm']->check('dozent', Course::findCurrent()->id) || $this->brainstorm->type == "sub") {
+                $brainstorm = Brainstorm::create($data);
+                $this->redirect('show/brainstorm/'.$this->brainstorm->id);
+            //}
         }
         $this->range_id = $range_id;
     }

@@ -94,13 +94,13 @@
   width: 80%;
   margin: 10px;
 }
-.brainstorm article.vote_brainstorm {
+.brainstorm article.vote_brainstorm section.main {
   display: table;
 }
-.brainstorm article.vote_brainstorm h1:empty {
+.brainstorm article.vote_brainstorm section.main h1:empty {
   display: none;
 }
-.brainstorm article.vote_brainstorm nav {
+.brainstorm article.vote_brainstorm section.main nav {
   background-color: #e7ebf1;
   display: table-cell;
   width: 4%;
@@ -108,22 +108,41 @@
   text-align: center;
   vertical-align: middle;
 }
-.brainstorm article.vote_brainstorm nav input {
+.brainstorm article.vote_brainstorm section.main nav input {
   display: block;
 }
-.brainstorm article.vote_brainstorm div.body {
+.brainstorm article.vote_brainstorm section.main div.body {
   padding: 10px;
   display: table-cell;
   vertical-align: middle;
   width: 92%;
 }
-.brainstorm article.vote_brainstorm div.power {
+.brainstorm article.vote_brainstorm section.main div.power {
   display: table-cell;
   width: 4%;
   padding: 4px;
   text-align: center;
   vertical-align: middle;
   border-right: 1px solid #e7ebf1;
+}
+.brainstorm article.vote_brainstorm footer {
+  border-top: 1px solid #e7ebf1;
+}
+.brainstorm article.vote_brainstorm footer > form {
+  display: none;
+}
+.brainstorm article.vote_brainstorm footer label {
+  padding: 2px;
+  color: #28497c;
+}
+.brainstorm article.vote_brainstorm footer label:hover {
+  color: #ff3333;
+}
+.brainstorm article.vote_brainstorm footer input[type='checkbox'] {
+  display: none;
+}
+.brainstorm article.vote_brainstorm footer input[type='checkbox']:checked + form {
+  display: inherit;
 }
 .brainstorm article.linked_brainstorm {
   padding: 10px;
