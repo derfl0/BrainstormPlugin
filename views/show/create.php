@@ -1,6 +1,8 @@
 <form class="studip_form" method="post" action="<?= $controller->url_for('show/create') ?>">
 
     <?= CSRFProtection::tokenTag() ?>
+    
+    <input type="hidden" name="brainstorm[range_id]" value="<?= $range_id ?>">
 
     <label>
         <?= _('Titel') ?>

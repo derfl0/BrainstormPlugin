@@ -5,8 +5,6 @@ class ShowController extends StudipController {
     public function __construct($dispatcher) {
         parent::__construct($dispatcher);
         $this->plugin = $dispatcher->plugin;
-
-        $this->init();
     }
 
     public function before_filter(&$action, &$args) {
@@ -16,26 +14,37 @@ class ShowController extends StudipController {
         } else {
             $this->set_layout($GLOBALS['template_factory']->open('layouts/base_without_infobox'));
         }
+
+        // Load brainstorm
+        if ($args) {
+            $this->brainstorm = Brainstorm::find($args[0]);
+            $this->range_id = $args[0];
+        }
+
+        $this->init();
     }
 
     public function index_action() {
         
     }
 
-    public function create_action() {
+    public function create_action($range_id = null) {
         if (Request::submitted('create')) {
             CSRFProtection::verifySecurityToken();
-            $GLOBALS['perm']->check('dozent', Course::findCurrent()->id);
             $data = Request::getArray('brainstorm');
-            $data['range_id'] = Course::findCurrent()->id;
             $data['user_id'] = User::findCurrent()->id;
-            Brainstorm::create($data);
-            $this->redirect('show/index');
+            $data['seminar_id'] = Course::findCurrent()->id;
+
+            // Check if we are allowed to post that brainstorm
+            if ($GLOBALS['perm']->check('dozent', Course::findCurrent()->id) || $this->brainstorm->type == "sub") {
+                Brainstorm::create($data);
+                $this->redirect('show/index');
+            }
         }
+        $this->range_id = $range_id;
     }
 
     public function brainstorm_action($id) {
-        $this->brainstorm = $this->brainstorms->find($id);
 
         // Insert new subbrainstorm
         if (Request::submitted('create')) {
@@ -52,18 +61,37 @@ class ShowController extends StudipController {
     }
 
     private function init() {
+
+        // Produce navigation
         $this->brainstorms = SimpleORMapCollection::createFromArray(Brainstorm::findByRange_id(Course::findCurrent()->id));
         foreach ($this->brainstorms as $brainstorm) {
             Navigation::addItem('/course/brainstorm/' . $brainstorm->id, new AutoNavigation(htmlReady($brainstorm->title), PluginEngine::GetURL($this->plugin, array(), 'show/brainstorm/' . $brainstorm->id)));
         }
 
-        // Create sidebar
-        if ($GLOBALS['perm']->have_studip_perm('tutor', Course::findCurrent()->id)) {
-            $sidebar = Sidebar::Get();
-            $actions = new ActionsWidget();
-            $actions->addLink(_('Neuen Brainstorm anlegen'), PluginEngine::GetURL($this->plugin, array(), 'show/create'), 'icons/16/blue/add.png', array('data-dialog' => 'size=auto;buttons=false;resize=false'));
-            $sidebar->addWidget($actions);
+        // Fetch sidebar
+        $sidebar = Sidebar::Get();
+
+        // Active navigation
+        if ($this->brainstorm) {
+            $current = $this->brainstorm;
+            while (!Navigation::hasItem('/course/brainstorm/' . $current->id)) {
+                $current = $current->parent;
+            }
+            Navigation::activateItem('/course/brainstorm/' . $current->id);
         }
+
+        // Create actions
+
+        $actions = new ActionsWidget();
+        if ($GLOBALS['perm']->have_studip_perm('tutor', Course::findCurrent()->id)) {
+            $actions->addLink(_('Neuen Brainstorm anlegen'), PluginEngine::GetURL($this->plugin, array(), 'show/create/' . Course::findCurrent()->id), 'icons/16/blue/add.png', array('data-dialog' => 'size=auto;buttons=false;resize=false'));
+        }
+
+        if ($this->brainstorm->type == 'sub') {
+             $actions->addLink(_('Neuen Subbrainstorm anlegen'), PluginEngine::GetURL($this->plugin, array(), 'show/create/' . $this->brainstorm->id), 'icons/16/blue/add.png', array('data-dialog' => 'size=auto;buttons=false;resize=false'));
+           
+        }
+        $sidebar->addWidget($actions);
     }
 
     // customized #url_for for plugins

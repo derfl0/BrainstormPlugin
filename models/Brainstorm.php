@@ -23,6 +23,10 @@ class Brainstorm extends SimpleORMap {
             'class_name' => 'Brainstorm',
             'assoc_foreign_key' => 'range_id'
         );
+        $config['belongs_to']['parent'] = array(
+            'class_name' => 'Brainstorm',
+            'foreign_key' => 'range_id'
+        );
         $config['additional_fields']['power'] = true;
         $config['additional_fields']['myvote'] = true;
         $config['additional_fields']['typename'] = true;
@@ -36,7 +40,7 @@ class Brainstorm extends SimpleORMap {
             'commented' => _('Kommentiert')
         );
     }
-    
+
     public function getTypename() {
         $types = self::getTypes();
         return $types[$this->type];
