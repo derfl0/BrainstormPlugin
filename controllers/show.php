@@ -11,8 +11,11 @@ class ShowController extends StudipController {
 
     public function before_filter(&$action, &$args) {
 
-        $this->set_layout($GLOBALS['template_factory']->open('layouts/base_without_infobox'));
-//      PageLayout::setTitle('');
+        if (Request::isXhr()) {
+            $this->set_content_type('text/html;Charset=windows-1252');
+        } else {
+            $this->set_layout($GLOBALS['template_factory']->open('layouts/base_without_infobox'));
+        }
     }
 
     public function index_action() {
@@ -25,6 +28,7 @@ class ShowController extends StudipController {
             $GLOBALS['perm']->check('dozent', Course::findCurrent()->id);
             $data = Request::getArray('brainstorm');
             $data['range_id'] = Course::findCurrent()->id;
+            $data['user_id'] = User::findCurrent()->id;
             Brainstorm::create($data);
             $this->redirect('show/index');
         }
@@ -57,7 +61,7 @@ class ShowController extends StudipController {
         if ($GLOBALS['perm']->have_studip_perm('tutor', Course::findCurrent()->id)) {
             $sidebar = Sidebar::Get();
             $actions = new ActionsWidget();
-            $actions->addLink(_('Neuen Brainstorm anlegen'), PluginEngine::GetURL($this->plugin, array(), 'show/create'), 'icons/16/blue/add.png');
+            $actions->addLink(_('Neuen Brainstorm anlegen'), PluginEngine::GetURL($this->plugin, array(), 'show/create'), 'icons/16/blue/add.png', array('data-dialog' => 'size=auto;buttons=false;resize=false'));
             $sidebar->addWidget($actions);
         }
     }

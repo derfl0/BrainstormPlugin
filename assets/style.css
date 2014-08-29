@@ -107,7 +107,6 @@
   padding: 4px;
   text-align: center;
   vertical-align: middle;
-  color: #d0d7e3;
 }
 .brainstorm article.vote_brainstorm nav input {
   display: block;
@@ -128,4 +127,13 @@
 }
 .brainstorm article.linked_brainstorm {
   padding: 10px;
+  color: #000;
+}
+.brainstorm article.linked_brainstorm div.type {
+  font-size: 0.8em;
+  color: #899ab9;
+}
+.brainstorm article.linked_brainstorm:hover {
+  border-color: #28497c;
+  color: #000;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Brainstorm.php
  * model class for table Brainstorm
@@ -14,11 +15,9 @@
  * @category    Stud.IP
  * @since       3.0
  */
+class Brainstorm extends SimpleORMap {
 
-class Brainstorm extends SimpleORMap
-{
-    protected static function configure($config = array())
-    {
+    protected static function configure($config = array()) {
         $config['db_table'] = 'brainstorms';
         $config['has_many']['children'] = array(
             'class_name' => 'Brainstorm',
@@ -26,35 +25,49 @@ class Brainstorm extends SimpleORMap
         );
         $config['additional_fields']['power'] = true;
         $config['additional_fields']['myvote'] = true;
+        $config['additional_fields']['typename'] = true;
         parent::configure($config);
     }
+
+    public static function getTypes() {
+        return array(
+            'simple' => _('Standard'),
+            'sub' => _('Untergliedert'),
+            'commented' => _('Kommentiert')
+        );
+    }
     
+    public function getTypename() {
+        $types = self::getTypes();
+        return $types[$this->type];
+    }
+
     public function getPower() {
         return (int) DBManager::get()->fetchColumn('SELECT SUM(vote) FROM brainstorm_votes WHERE brainstorm_id = ?', array($this->id));
     }
-    
+
     public function getMyvote() {
         return new BrainstormVote(array($this->id, $GLOBALS['user']->id));
     }
-    
+
     public function answer($text) {
         if ($this->allowedToPost()) {
             return self::create(array(
-                'range_id' => $this->id,
-                'text' => $text
+                        'range_id' => $this->id,
+                        'text' => $text
             ));
         }
     }
-    
+
     public function allowedToPost($user_id = null) {
         return $GLOBALS['perm']->have_studip_perm('autor', $this->range_id, $user_id);
     }
-    
+
     public function vote($value, $user_id = null) {
         $user_id = $user_id ? : $GLOBALS['user']->id;
         $vote = new BrainstormVote(array($this->id, $user_id));
         $vote->vote = $value;
         $vote->store();
     }
-    
+
 }

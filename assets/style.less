@@ -24,7 +24,6 @@
                 input {
                     display: block;
                 }
-                color:@content-color-40;
             }
             div.body {
                 padding: 10px;
@@ -43,6 +42,15 @@
         }
         &.linked_brainstorm {
             padding: 10px;
+            color: #000;
+            div.type {
+                font-size: 0.8em;
+                color: @content-color;
+            }
+            &:hover {
+                border-color: @base-color;
+                color: #000;
+            }
         }
     }
 }
