@@ -44,30 +44,20 @@
  */
 .scrollbox-vertical {
   overflow: auto;
-  background: /* Shadow covers */
- linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */
- radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
-  background: /* Shadow covers */
- linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */
- radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
+  background: /* Shadow covers */ linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(50% 0, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(50% 100%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
+  background: /* Shadow covers */ linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) 0 100%, /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
   background-repeat: no-repeat;
   background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
   /* Opera doesn't support this in the shorthand */
-
   background-attachment: local, local, scroll, scroll;
 }
 .scrollbox-horizontal {
   overflow: auto;
-  background: /* Shadow covers */
- linear-gradient(90deg, #ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff 70%) 100% 0, /* Shadows */
- radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 100% 0;
-  background: /* Shadow covers */
- linear-gradient(90deg, #ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff 70%) 100% 0, /* Shadows */
- radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 100% 0;
+  background: /* Shadow covers */ linear-gradient(90deg, #ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff 70%) 100% 0, /* Shadows */ radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 100% 0;
+  background: /* Shadow covers */ linear-gradient(90deg, #ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff 70%) 100% 0, /* Shadows */ radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 100% 0;
   background-repeat: no-repeat;
   background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
   /* Opera doesn't support this in the shorthand */
-
   background-attachment: local, local, scroll, scroll;
 }
 .sr-only {
@@ -104,13 +94,13 @@
   width: 80%;
   margin: 10px;
 }
-.brainstorm article.vote_brainstorm {
+.brainstorm article.vote_brainstorm section.main {
   display: table;
 }
-.brainstorm article.vote_brainstorm h1:empty {
+.brainstorm article.vote_brainstorm section.main h1:empty {
   display: none;
 }
-.brainstorm article.vote_brainstorm nav {
+.brainstorm article.vote_brainstorm section.main nav {
   background-color: #e7ebf1;
   display: table-cell;
   width: 4%;
@@ -118,16 +108,16 @@
   text-align: center;
   vertical-align: middle;
 }
-.brainstorm article.vote_brainstorm nav input {
+.brainstorm article.vote_brainstorm section.main nav input {
   display: block;
 }
-.brainstorm article.vote_brainstorm div.body {
+.brainstorm article.vote_brainstorm section.main div.body {
   padding: 10px;
   display: table-cell;
   vertical-align: middle;
   width: 92%;
 }
-.brainstorm article.vote_brainstorm div.power {
+.brainstorm article.vote_brainstorm section.main div.power {
   display: table-cell;
   width: 4%;
   padding: 4px;
@@ -135,6 +125,34 @@
   vertical-align: middle;
   border-right: 1px solid #e7ebf1;
 }
+.brainstorm article.vote_brainstorm footer {
+  border-top: 1px solid #e7ebf1;
+}
+.brainstorm article.vote_brainstorm footer > form {
+  display: none;
+}
+.brainstorm article.vote_brainstorm footer label {
+  padding: 2px;
+  color: #28497c;
+}
+.brainstorm article.vote_brainstorm footer label:hover {
+  color: #ff3333;
+}
+.brainstorm article.vote_brainstorm footer input[type='checkbox'] {
+  display: none;
+}
+.brainstorm article.vote_brainstorm footer input[type='checkbox']:checked + form {
+  display: inherit;
+}
 .brainstorm article.linked_brainstorm {
   padding: 10px;
+  color: #000;
+}
+.brainstorm article.linked_brainstorm div.type {
+  font-size: 0.8em;
+  color: #899ab9;
+}
+.brainstorm article.linked_brainstorm:hover {
+  border-color: #28497c;
+  color: #000;
 }
