@@ -20,7 +20,7 @@ class BrainstormPlugin extends StudIPPlugin implements StandardPlugin {
     }
 
     public function getTabNavigation($course_id) {
-        $navigation = new AutoNavigation(_('Brainstorm'));
+        $navigation = new AutoNavigation($this->getDisplayTitle());
         $navigation->setURL(PluginEngine::GetURL($this, array(), 'show/index'));
         $navigation->setActiveImage($this->getPluginURL() . '/assets/images/brainstorm.png');
         $navigation->setImage($this->getPluginURL() . '/assets/images/brainstorm_active.png');
@@ -37,17 +37,21 @@ class BrainstormPlugin extends StudIPPlugin implements StandardPlugin {
 
     public function getIconNavigation($course_id, $last_visit, $user_id) {
         $new = Brainstorm::findBySQL("range_id = ? AND chdate > ?", array($course_id, $last_visit));
-
-        $icon = new Navigation(_("Brainstorm"), PluginEngine::GetURL($this, array('cid' => $course_id), 'show/index'));
-        $icon->setImage($this->getPluginURL() . '/assets/images/brainstorm_20_grey.png', array('title' => _("Brainstorm")));
+        $size = $GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? 40 : 20;
+        $icon = new Navigation($this->getDisplayTitle(), PluginEngine::GetURL($this, array('cid' => $course_id), 'show/index'));
+        $icon->setImage($this->getPluginURL() . '/assets/images/brainstorm_'.$size.'_grey.png', array('title' => $this->getDisplayTitle()));
         if (count($new)) {
-            $icon->setImage($this->getPluginURL() . '/assets/images/brainstorm_20_red.png', array('title' => _("Neuer Brainstorm verfügbar")));
+            $icon->setImage($this->getPluginURL() . '/assets/images/brainstorm_'.$size.'_red.png', array('title' => sprintf(_("Neuer %s verfügbar"), $this->getDisplayTitle())));
         }
         return $icon;
     }
 
     public function getInfoTemplate($course_id) {
         return null;
+    }
+
+    public function getDisplayTitle() {
+        return _("Brainstorm");
     }
 
     public function perform($unconsumed_path) {
