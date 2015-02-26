@@ -55,13 +55,13 @@ class ShowController extends StudipController {
     public function brainstorm_action($id) {
 
         // Insert new subbrainstorm
-        if (Request::isPost() && Request::submitted('create')) {
+        if (Request::submitted('create')) {
             CSRFProtection::verifySecurityToken();
             $this->brainstorm->answer(Request::get('answer'));
         }
 
         // Check if vote is required
-        if (Request::isPost() && Request::submitted('vote')) {
+        if (Request::submitted('vote')) {
             CSRFProtection::verifySecurityToken();
             $brainstorm = new Brainstorm(Request::get('brainstorm'));
             $brainstorm->vote(key(Request::getArray('vote')));
