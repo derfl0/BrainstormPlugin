@@ -4,7 +4,7 @@
         <?= formatReady($brainstorm->text) ?>
     </div>
     <? if ($brainstorm->children): ?>
-        <? foreach ($brainstorm->children->orderBy('power DESC') as $child): ?>
+        <? foreach ($brainstorm->children->orderBy('power DESC', SORT_NUMERIC) as $child): ?>
             <? if ($brainstorm->type == 'sub'): ?>
                 <?= $this->render_partial('show/_linked_brainstorm', array('brainstorm' => $child)) ?>
             <? else: ?>
